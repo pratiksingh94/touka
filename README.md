@@ -1,9 +1,9 @@
-# Toka 都会
+# Touka / とうか
 
 Browser based packet analyzer.  
 Made with no external library for analysis or parsing!
 
-*都会 = transparency!*
+*とうか　(都会) = transparency / transmission / passing through!*
 
 > Status: under active development :3
 
