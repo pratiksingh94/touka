@@ -1,3 +1,4 @@
+import { parsePCAP } from "@/parser/core/parse";
 import { WorkspaceHeader } from "./WorkspaceHeader";
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export function WorkSpace({ file, onBack }: Props) {
+  parsePCAP(file)
   return (
     <div className="h-screen flex flex-col bg-bg-primary">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>

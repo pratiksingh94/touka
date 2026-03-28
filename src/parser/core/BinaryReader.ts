@@ -12,7 +12,7 @@ class BinaryReader {
   }
 
   get byteLength() {
-    return this.view.buffer.byteLength;
+    return this.view.byteLength;
   }
 
   seek(pos: number) {
@@ -34,13 +34,13 @@ class BinaryReader {
   }
   
   readUInt16() {
-    const val = this.view.getUint16(this.offset);
+    const val = this.view.getUint16(this.offset, this.endian);
     this.offset += 2;
     return val;
   }
 
   readUInt32() {
-    const val = this.view.getUint32(this.offset);
+    const val = this.view.getUint32(this.offset, this.endian);
     this.offset += 4;
     return val;
   }
@@ -53,6 +53,14 @@ class BinaryReader {
     const bytes = new Uint8Array(this.view.buffer, this.view.byteOffset + this.offset, length)
 
     this.offset += length;
+    return bytes;
+  }
+
+  readRemaining() {
+    const remaining = this.view.byteLength - this.offset;
+    const bytes = new Uint8Array(this.view.buffer, this.view.byteOffset + this.offset, remaining);
+    this.offset = this.view.byteLength;
+    
     return bytes;
   }
 
