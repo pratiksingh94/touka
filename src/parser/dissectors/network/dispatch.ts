@@ -1,11 +1,13 @@
 import { BinaryReader } from "@/parser/core/BinaryReader";
 import { parseIPv4 } from "./ipv4/parser";
 import type { NetworkLayer, UnknownNetworkLayer } from "./types";
+import { parseARP } from "./arp/parsers";
 
 type NetworkParser = (raw: Uint8Array) => NetworkLayer;
 
 const networkRegistry: Partial<Record<number, NetworkParser>> = {
-  0x0800: parseIPv4  
+  0x0800: parseIPv4,
+  0x0806: parseARP
 }
 
 

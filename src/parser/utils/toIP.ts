@@ -1,7 +1,7 @@
 import type { BinaryReader } from "../core/BinaryReader"
 
 
-function readIP(reader: BinaryReader) {
+function toIP(reader: BinaryReader) {
   return [
     reader.readUInt8(),
     reader.readUInt8(),
@@ -10,4 +10,4 @@ function readIP(reader: BinaryReader) {
   ].join(".")
 }
 
-export {readIP}
+export {toIP}
