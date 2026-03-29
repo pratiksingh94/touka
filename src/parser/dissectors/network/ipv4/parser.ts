@@ -18,8 +18,8 @@
 
 import { BinaryReader } from "@/parser/core/BinaryReader";
 import type { IPv4Packet } from "./types";
-import { toIP } from "@/parser/utils/toIP";
-import { transportDispatcher } from "../../transport/dispatch";
+import { toIPv4 } from "@/parser/utils/toIP";
+import { dispatchTransport } from "../../transport/dispatch";
 
 
 function parseIPv4(raw: Uint8Array): IPv4Packet {
@@ -43,19 +43,18 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
 
   reader.skip(2) // header checksum
 
-  const srcIP = toIP(reader);
-  const dstIP = toIP(reader);
+  const srcIP = toIPv4(reader);
+  const dstIP = toIPv4(reader);
 
   if(ihl > 20) {
     reader.skip(ihl - 20);
   }
 
   const rawPayload = raw.slice(ihl);
-  const payload = transportDispatcher(protocol, rawPayload)
+  const payload = dispatchTransport(protocol, rawPayload)
 
   return {
     type: "ipv4",
-    version,
     ihl,
     totalLength,
     identification,

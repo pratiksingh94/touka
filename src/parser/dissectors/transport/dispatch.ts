@@ -12,7 +12,7 @@ const transportRegistry: Partial<Record<number, TransportParser>> = {
 }
 
 
-export function transportDispatcher(protocol: number, raw: Uint8Array): TransportLayer {
+export function dispatchTransport(protocol: number, raw: Uint8Array): TransportLayer {
   const parser = transportRegistry[protocol];
 
   if(!parser) {

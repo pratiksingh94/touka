@@ -1,6 +1,6 @@
 import { BinaryReader } from "@/parser/core/BinaryReader";
 import type { ARPPacket } from "./types";
-import { toIP } from "@/parser/utils/toIP";
+import { toIPv4 } from "@/parser/utils/toIP";
 import { toMAC } from "@/parser/utils/toMAC";
 
 export function parseARP(raw: Uint8Array): ARPPacket {
@@ -15,10 +15,10 @@ export function parseARP(raw: Uint8Array): ARPPacket {
   const operation = reader.readUInt16();
 
   const senderMAC = toMAC(reader.readBytes(6));
-  const senderIP = toIP(reader);
+  const senderIP = toIPv4(reader);
 
   const targetMAC = toMAC(reader.readBytes(6));
-  const targetIP = toIP(reader);
+  const targetIP = toIPv4(reader);
 
   return {
     type: "arp",
