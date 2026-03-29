@@ -1,5 +1,5 @@
 #testing stuff
-test.pcap
+*.pcap
 parser-temp
 
 # Logs
