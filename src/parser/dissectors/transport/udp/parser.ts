@@ -18,6 +18,7 @@ export function parseUDP(raw: Uint8Array): UDPPacket {
     srcPort,
     dstPort,
     length,
-    payload
+    payload,
+    raw
   }
 }

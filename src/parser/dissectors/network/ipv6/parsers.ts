@@ -58,6 +58,7 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
     src,
     dst,
     extenstionHeaders: headerExts,
-    payload
+    payload,
+    raw
   }
 }

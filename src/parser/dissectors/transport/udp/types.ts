@@ -3,5 +3,6 @@ export type UDPPacket = {
   srcPort: number;
   dstPort: number;
   length: number;
-  payload: Uint8Array
+  payload: Uint8Array;
+  raw: Uint8Array;
 }

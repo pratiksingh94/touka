@@ -12,15 +12,15 @@ export function parseICMPv6(raw: Uint8Array): ICMPv6Packet {
 
   let packet: ICMPv6Packet;
   if((type === 128 || type === 129) && code === 0)  {
-    packet = parseEcho(reader, type);
+    packet = parseEcho(reader, type, raw);
   } else if(type === 1) {
-    packet = parseUnreachable(reader, code as 0 | 1 | 2 | 3 | 4 | 5 | 6);
+    packet = parseUnreachable(reader, code as 0 | 1 | 2 | 3 | 4 | 5 | 6, raw);
   } else if(type === 3) {
-    packet = parseTimeExceeded(reader, code as 0 | 1);
+    packet = parseTimeExceeded(reader, code as 0 | 1, raw);
   } else if(type === 135) {
-    packet = parseNeighbourSolicitation(reader);
+    packet = parseNeighbourSolicitation(reader, raw);
   } else if(type === 136) {
-    packet = parseNeighbourAdvertisement(reader);
+    packet = parseNeighbourAdvertisement(reader, raw);
   } else {
     packet = parseGeneric(reader, type, code);
   }
@@ -29,7 +29,7 @@ export function parseICMPv6(raw: Uint8Array): ICMPv6Packet {
 }
 
 
-function parseEcho(reader: BinaryReader, type: number): ICMPv6Echo {
+function parseEcho(reader: BinaryReader, type: number, raw: Uint8Array): ICMPv6Echo {
   const identifier = reader.readUInt16();
   const sequence = reader.readUInt16();
   const data = reader.readRemaining();
@@ -40,11 +40,12 @@ function parseEcho(reader: BinaryReader, type: number): ICMPv6Echo {
     code: 0,
     identifier,
     sequence,
-    data
+    data,
+    raw
   }
 }
 
-function parseUnreachable(reader: BinaryReader, code: 0 | 1 | 2 | 3 | 4 | 5 | 6): ICMPv6Unreachable {
+function parseUnreachable(reader: BinaryReader, code: 0 | 1 | 2 | 3 | 4 | 5 | 6, raw: Uint8Array): ICMPv6Unreachable {
   reader.readUInt32(); // unused
   const originalPacket = reader.readRemaining();
 
@@ -52,11 +53,12 @@ function parseUnreachable(reader: BinaryReader, code: 0 | 1 | 2 | 3 | 4 | 5 | 6)
     type: "icmpv6",
     kind: "unreachable",
     code,
-    originalPacket
+    originalPacket,
+    raw
   }
 }
 
-function parseTimeExceeded(reader: BinaryReader, code: 0 | 1): ICMPv6TimeExceeded {
+function parseTimeExceeded(reader: BinaryReader, code: 0 | 1, raw: Uint8Array): ICMPv6TimeExceeded {
   reader.readUInt32();
   const originalPacket = reader.readRemaining();
 
@@ -64,11 +66,12 @@ function parseTimeExceeded(reader: BinaryReader, code: 0 | 1): ICMPv6TimeExceede
     type: "icmpv6",
     kind: "time-exceeded",
     code,
-    originalPacket
+    originalPacket,
+    raw
   }
 }
 
-function parseNeighbourSolicitation(reader: BinaryReader): ICMPv6NeighbourSolicitation {
+function parseNeighbourSolicitation(reader: BinaryReader, raw: Uint8Array): ICMPv6NeighbourSolicitation {
   reader.readUInt32(); // reserved
 
   const targetAddress = toIPv6(reader.readBytes(16));
@@ -79,11 +82,12 @@ function parseNeighbourSolicitation(reader: BinaryReader): ICMPv6NeighbourSolici
     kind: "neighbour-solicitation",
     code: 0,
     targetAddress,
-    options
+    options,
+    raw
   }
 }
 
-function parseNeighbourAdvertisement(reader: BinaryReader): ICMPv6NeighbourAdvertisement {
+function parseNeighbourAdvertisement(reader: BinaryReader, raw: Uint8Array): ICMPv6NeighbourAdvertisement {
   const flagsWord = reader.readUInt32();
   return {
     type: "icmpv6",
@@ -93,7 +97,8 @@ function parseNeighbourAdvertisement(reader: BinaryReader): ICMPv6NeighbourAdver
     solicited: (flagsWord & 0x40000000) !== 0,
     override: (flagsWord & 0x20000000) !== 0,
     targetAddress: toIPv6(reader.readBytes(16)),
-    options: parseNDPOptions(reader)
+    options: parseNDPOptions(reader),
+    raw
   }
 }
 

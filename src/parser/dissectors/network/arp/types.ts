@@ -9,4 +9,5 @@ export type ARPPacket = {
   senderIP: string;
   targetMAC: string;
   targetIP: string;
+  raw: Uint8Array;
 }

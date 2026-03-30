@@ -12,4 +12,5 @@ export type IPv4Packet = {
   srcIP: string;
   dstIP: string;
   payload: TransportLayer;
+  raw: Uint8Array;
 }

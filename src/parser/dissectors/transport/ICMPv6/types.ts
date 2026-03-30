@@ -38,6 +38,7 @@ export type ICMPv6Echo = {
   identifier: number;
   sequence: number;
   data: Uint8Array;
+  raw: Uint8Array;
 }
 
 export type ICMPv6Unreachable = {
@@ -45,13 +46,15 @@ export type ICMPv6Unreachable = {
   kind: "unreachable";
   code: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   originalPacket: Uint8Array;
+  raw: Uint8Array;
 }
 
 export type ICMPv6TimeExceeded = {
   type: "icmpv6";
   kind: "time-exceeded";
   code: 0 | 1;
-  originalPacket: Uint8Array
+  originalPacket: Uint8Array;
+  raw: Uint8Array;
 }
 
 export type ICMPv6NeighbourSolicitation = {
@@ -59,7 +62,8 @@ export type ICMPv6NeighbourSolicitation = {
   kind: "neighbour-solicitation";
   code: 0;
   targetAddress: string;
-  options: NDPOption[]
+  options: NDPOption[];
+  raw: Uint8Array;
 }
 
 export type ICMPv6NeighbourAdvertisement = {
@@ -70,7 +74,8 @@ export type ICMPv6NeighbourAdvertisement = {
   solicited: boolean;
   override: boolean;
   targetAddress: string;
-  options: NDPOption[]
+  options: NDPOption[];
+  raw: Uint8Array;
 }
 
 export type ICMPv6Generic = {

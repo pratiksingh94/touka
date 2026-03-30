@@ -53,6 +53,7 @@ export function parseTCP(raw: Uint8Array): TCPPacket {
     acknowledgementNumber,
     headerLength: offset,
     flags,
-    payload
+    payload,
+    raw
   }
 }

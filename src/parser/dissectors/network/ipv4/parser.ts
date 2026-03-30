@@ -64,7 +64,8 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
     protocol,
     srcIP,
     dstIP,
-    payload
+    payload,
+    raw
   }
 }
 

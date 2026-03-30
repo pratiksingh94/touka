@@ -5,5 +5,6 @@ export type EthernetFrame = {
   destMac: string;
   srcMac: string;
   etherType: number;
-  payload: NetworkLayer
+  payload: NetworkLayer;
+  raw: Uint8Array;
 }

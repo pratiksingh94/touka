@@ -28,6 +28,7 @@ export function parseARP(raw: Uint8Array): ARPPacket {
     senderMAC,
     senderIP,
     targetMAC,
-    targetIP
+    targetIP,
+    raw
   }
 }

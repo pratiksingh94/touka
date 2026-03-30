@@ -5,15 +5,16 @@ export type ICMPv4Echo = {
   identifier: number;
   sequence: number;
   data: Uint8Array;
+  raw: Uint8Array;
 };
 
 export type ICMPv4Unreachable = {
   type: "icmpv4";
   kind: "unreachable";
-  unreachable: "net" | "host" | "port";
   code: number;
   originalIPHeader: Uint8Array;
   originalPayloadStart: Uint8Array;
+  raw: Uint8Array;
 }
 
 export type ICMPv4TimeExceeded = {
@@ -22,6 +23,7 @@ export type ICMPv4TimeExceeded = {
   code: number;
   originalIPHeader: Uint8Array;
   originalPayloadStart: Uint8Array;
+  raw: Uint8Array;
 }
 
 export type ICMPv4Generic = {

@@ -34,7 +34,8 @@ function parseEthernet(raw: Uint8Array): EthernetFrame {
     destMac,
     srcMac,
     etherType,
-    payload
+    payload,
+    raw
   }
 }
 

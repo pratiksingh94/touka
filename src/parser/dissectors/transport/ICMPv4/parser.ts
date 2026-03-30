@@ -9,17 +9,17 @@ export function parseICMPv4(raw: Uint8Array): ICMPv4Packet {
 
   let packet: ICMPv4Packet;
   if(type === 0 && code === 0) {
-    packet = parseEcho(reader, code, "echo-reply");
+    packet = parseEcho(reader, code, "echo-reply", raw);
   } else if(type === 3 && code === 0) {
-    packet = parseUnreachable(reader, code, "net");
+    packet = parseUnreachable(reader, code, raw);
   } else if(type === 3 && code === 1) {
-    packet = parseUnreachable(reader, code, "host");
+    packet = parseUnreachable(reader, code, raw);
   } else if(type === 3 && code === 2) {
-    packet = parseUnreachable(reader, code, "host");
+    packet = parseUnreachable(reader, code, raw);
   } else if(type === 8 && code === 0) {
-    packet = parseEcho(reader, code, "echo-request");
+    packet = parseEcho(reader, code, "echo-request", raw);
   } else if(type === 11 && code === 0) {
-    packet = parseTimeExceeded(reader, code);
+    packet = parseTimeExceeded(reader, code, raw);
   } else {
     packet = {
       type: "icmpv4",
@@ -34,7 +34,7 @@ export function parseICMPv4(raw: Uint8Array): ICMPv4Packet {
 }
 
 
-function parseEcho(reader: BinaryReader, code: number, kind: "echo-reply" | "echo-request"): ICMPv4Echo {
+function parseEcho(reader: BinaryReader, code: number, kind: "echo-reply" | "echo-request", raw: Uint8Array): ICMPv4Echo {
   reader.readUInt16() // discarding checksum
   const identifier = reader.readUInt16();
 
@@ -47,11 +47,12 @@ function parseEcho(reader: BinaryReader, code: number, kind: "echo-reply" | "ech
     code,
     identifier,
     sequence: seqNum,
-    data
+    data,
+    raw
   }
 }
 
-function parseUnreachable(reader: BinaryReader, code: number, unreachable: "net" | "host" | "port"): ICMPv4Unreachable {
+function parseUnreachable(reader: BinaryReader, code: number, raw: Uint8Array): ICMPv4Unreachable {
   reader.readUInt16(); // checksum
   reader.readUInt32(); // unused
 
@@ -61,14 +62,14 @@ function parseUnreachable(reader: BinaryReader, code: number, unreachable: "net"
   return {
     type: "icmpv4",
     kind: "unreachable",
-    unreachable,
     code,
     originalIPHeader,
-    originalPayloadStart
+    originalPayloadStart,
+    raw
   }
 }
 
-function parseTimeExceeded(reader: BinaryReader, code: number): ICMPv4TimeExceeded {
+function parseTimeExceeded(reader: BinaryReader, code: number, raw: Uint8Array): ICMPv4TimeExceeded {
   reader.readUInt16();
   reader.readUInt32();
 
@@ -80,6 +81,7 @@ function parseTimeExceeded(reader: BinaryReader, code: number): ICMPv4TimeExceed
     kind: "time-exceeded",
     code,
     originalIPHeader,
-    originalPayloadStart
+    originalPayloadStart,
+    raw
   }
 }
