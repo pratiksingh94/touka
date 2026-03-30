@@ -27,6 +27,7 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
 
   const byte = reader.readUInt8();
   const version = byte >> 4;
+  void version;
   const ihl = (byte & 0x0f) * 4;
 
   reader.skip(1); // DSCP + ECN

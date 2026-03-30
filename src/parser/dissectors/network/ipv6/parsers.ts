@@ -20,6 +20,7 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
 
   const firstWord = reader.readUInt32();
   const version = (firstWord >> 28) & 0xF; // useless tbh
+  void version;
   const trafficClass = (firstWord >> 20) & 0xFF;
   const flowLabel = firstWord & 0xFFFFF;
 
