@@ -12,8 +12,8 @@ Made with no external library for analysis or parsing!
 ![home page](https://cdn.hackclub.com/019d26a1-9a14-7e91-9b6c-dd7089b50f0d/localhost_5174_.png)
 
 ## To-Do (vague asf)
-1. complete the ethernet link layer stack (IPv6, ARP, ICMP)
-2. visualize packets
+1. create the 3 pane UI
+2. add more link layer stuff
 
 ## Logs
 - [Changelog](./CHANGELOG.md)

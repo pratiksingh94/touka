@@ -10,3 +10,8 @@ the stuff changing duh dawg
 - created a group of dissectors to parse ethernet link layer packets (ethernet -> IP -> TCP/UDP)
 - types of all the packets and frames
 - file structure to manage parsers of all 4 layers
+
+### 30-03-2026
+- added support for ICMPv4, ICMPv6, IPv6, ARP
+- now storing raw bytes with all packets for hex view
+- made definition look up table for UI display of packets
