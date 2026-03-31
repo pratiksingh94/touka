@@ -44,8 +44,7 @@ async function parsePCAP(file: File) {
     })
   }
 
-  const PCAP = { globalHeaders, packets };
-  console.log(PCAP)
+  return { globalHeaders, packets }
 }
 
 export {parsePCAP}
