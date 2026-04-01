@@ -28,12 +28,21 @@ export function abbreviateIPv6(ip: string) {
     longestRun = currentRun;
     longestStart = currentStart;
   }
+
+  let result: string;
   if(longestRun > 1) {
     const before = stripped.slice(0, longestStart).join(":");
     const after = stripped.slice(longestStart + longestRun).join(":");
 
-    return `${before}::${after || ""}`
+    result = `${before}::${after || ""}`
+  } else {
+    result = stripped.join(":")
   }
 
-  return stripped.join(":")
+  const MAX_LEN = 18;
+  if(result.length > MAX_LEN) {
+    result = result.slice(0, MAX_LEN - 3) + '...'
+  }
+
+  return result;
 }
