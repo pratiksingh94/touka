@@ -15,3 +15,7 @@ the stuff changing duh dawg
 - added support for ICMPv4, ICMPv6, IPv6, ARP
 - now storing raw bytes with all packets for hex view
 - made definition look up table for UI display of packets
+
+### 01-04-2026
+- created the 3 pane UI with resize handles
+- created Packet List pane, shows all packets

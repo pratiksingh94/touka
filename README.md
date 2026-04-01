@@ -12,7 +12,7 @@ Made with no external library for analysis or parsing!
 ![home page](https://cdn.hackclub.com/019d26a1-9a14-7e91-9b6c-dd7089b50f0d/localhost_5174_.png)
 
 ## To-Do (vague asf)
-1. create the 3 pane UI
+1. create protocol tree and hex dump pane
 2. add more link layer stuff
 
 ## Logs

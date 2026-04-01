@@ -6,7 +6,6 @@ import { HorizontalResizeHandle, VertocalResizeHandle } from "./ResizeHandle";
 import { ProtocolTreePane } from "./panes/ProtocolTreePane";
 import { HexDumpPane } from "./panes/HexDumpPane";
 import { PacketList } from "./PacketList/PacketList";
-import { PaneHeader } from "./PaneHeader";
 
 interface Props {
   file: File;
