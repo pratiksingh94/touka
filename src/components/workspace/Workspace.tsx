@@ -6,6 +6,7 @@ import { HorizontalResizeHandle, VertocalResizeHandle } from "./ResizeHandle";
 import { ProtocolTreePane } from "./panes/ProtocolTreePane";
 import { HexDumpPane } from "./panes/HexDumpPane";
 import { PacketList } from "./PacketList/PacketList";
+import { buildPacketDetails } from "@/views/PacketDetail/buildPacketDetails";
 
 interface Props {
   file: File;
@@ -62,8 +63,12 @@ export function WorkSpace({ file, onBack }: Props) {
   }, [])
 
   const handleSelect = useCallback((index: number) => {
+    const packet = packets[index];
+    if(!packet) return;
     setSelectIndex(index)
-  }, []);
+    const details = buildPacketDetails(packet)
+    console.log(details)
+  }, [packets]);
   return (
     <div className="h-screen flex flex-col bg-bg-primary overflow-hidden">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>

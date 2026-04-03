@@ -34,6 +34,7 @@ export type NDPOption = NDPOptionLinkLayer | NDPOptionPrefix | NDPOptionMTU | ND
 export type ICMPv6Echo = {
   type: "icmpv6";
   kind: "echo-request" | "echo-reply";
+  icmpType: number;
   code: 0;
   identifier: number;
   sequence: number;
@@ -44,6 +45,7 @@ export type ICMPv6Echo = {
 export type ICMPv6Unreachable = {
   type: "icmpv6";
   kind: "unreachable";
+  icmpType: number;
   code: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   originalPacket: Uint8Array;
   raw: Uint8Array;
@@ -52,6 +54,7 @@ export type ICMPv6Unreachable = {
 export type ICMPv6TimeExceeded = {
   type: "icmpv6";
   kind: "time-exceeded";
+  icmpType: number;
   code: 0 | 1;
   originalPacket: Uint8Array;
   raw: Uint8Array;
@@ -60,6 +63,7 @@ export type ICMPv6TimeExceeded = {
 export type ICMPv6NeighbourSolicitation = {
   type: "icmpv6";
   kind: "neighbour-solicitation";
+  icmpType: number;
   code: 0;
   targetAddress: string;
   options: NDPOption[];
@@ -69,6 +73,7 @@ export type ICMPv6NeighbourSolicitation = {
 export type ICMPv6NeighbourAdvertisement = {
   type: "icmpv6";
   kind: "neighbour-advertisement";
+  icmpType: number;
   code: 0;
   router: boolean;
   solicited: boolean;

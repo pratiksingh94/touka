@@ -1,6 +1,7 @@
 export type ICMPv4Echo = {
   type: "icmpv4";
   kind: "echo-request" | "echo-reply";
+  icmpType: number;
   code: number;
   identifier: number;
   sequence: number;
@@ -11,6 +12,7 @@ export type ICMPv4Echo = {
 export type ICMPv4Unreachable = {
   type: "icmpv4";
   kind: "unreachable";
+  icmpType: number;
   code: number;
   originalIPHeader: Uint8Array;
   originalPayloadStart: Uint8Array;
@@ -20,6 +22,7 @@ export type ICMPv4Unreachable = {
 export type ICMPv4TimeExceeded = {
   type: "icmpv4";
   kind: "time-exceeded";
+  icmpType: number;
   code: number;
   originalIPHeader: Uint8Array;
   originalPayloadStart: Uint8Array;

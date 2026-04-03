@@ -24,7 +24,7 @@ export function parseARP(raw: Uint8Array): ARPPacket {
     type: "arp",
     hardwareType,
     protocol,
-    operation: operation === 1 ? "request" : "reply",
+    operation: operation,
     senderMAC,
     senderIP,
     targetMAC,

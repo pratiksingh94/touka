@@ -4,7 +4,7 @@ export type ARPPacket = {
   type: "arp";
   hardwareType: number;
   protocol: number;
-  operation: ARPOperation;
+  operation: number;
   senderMAC: string;
   senderIP: string;
   targetMAC: string;

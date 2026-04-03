@@ -36,7 +36,11 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
   const identification = reader.readUInt16();
 
   const rawFlags = reader.readUInt16();
-  const flags = rawFlags >> 13;
+  const flags = {
+    reserved: Boolean(rawFlags & 0x8000),
+    dontFragment: Boolean(rawFlags & 0x4000),
+    moreFragments: Boolean(rawFlags & 0x2000)
+  }
   const fragmentOffset = rawFlags & 0x1fff;
 
   const ttl = reader.readUInt8();
