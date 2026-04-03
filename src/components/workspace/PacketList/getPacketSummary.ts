@@ -89,7 +89,7 @@ function getInfo(packet: PacketRecord): string {
 
   if(payload.type === "arp") {
     const arp = payload as ARPPacket;
-    if(arp.operation === "request") {
+    if(arp.operation === 1) {
       return `Who has ${arp.targetIP}? Tell ${arp.senderIP}`
     }
     return `${arp.senderIP} is at ${arp.senderMAC}`

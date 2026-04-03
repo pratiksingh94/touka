@@ -1,5 +1,5 @@
 import type { EthernetFrame } from "@/parser/dissectors/link/ethernet/types";
-import type { DetailsBuilderResult, PacketDetails } from "../../types";
+import type { DetailsBuilderResult } from "../../types";
 import { ETHERTYPE_NAMES } from "@/parser/definitions/ethertypes";
 
 export function buildEthernetDetails(frame: EthernetFrame, offset: number): DetailsBuilderResult {
