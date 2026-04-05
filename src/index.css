@@ -11,6 +11,7 @@
   --color-accent-muted: #388bfd33;
   --color-border: #30363d;
   --color-border-muted: #21262d;
+  --color-protocol-title: #79c0ff;
 }
 
 @layer base {

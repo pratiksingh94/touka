@@ -10,8 +10,8 @@ export function buildPacketDetails(p: PacketRecord ): PacketDetails[] {
   const linkBuilder = LINK_BUILDERS[link.type]
   if(linkBuilder) {
     const { headerLength, details } = linkBuilder(link, 0);
-    detailsArr.push(details),
-    offset += headerLength
+    detailsArr.push(details);
+    offset += headerLength;
   }
 
   // TODO: MAKE THIS BETTER BY EACH LAYER HAVINT ITS OWN RETURN TYPE WITH PAYLOAD?: 

@@ -3,16 +3,21 @@ export type PacketDetails = {
   summary: string;
   offset: number;
   length: number;
-  fields: DetailField[]
+  fields: PacketField[]
 }
 
-export type DetailField = {
+export type PacketField = {
   label: string;
   value: string;
   offset: number;
   length: number;
-  children?: DetailField[]
+  children?: PacketField[]
 }
+
+export type SelectedField = {
+  offset: number;
+  length: number;
+} | null;
 
 export type DetailsBuilderResult = {
   details: PacketDetails;

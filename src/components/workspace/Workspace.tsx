@@ -3,10 +3,12 @@ import { WorkspaceHeader } from "./WorkspaceHeader";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PacketRecord } from "@/parser/core/types";
 import { HorizontalResizeHandle, VertocalResizeHandle } from "./ResizeHandle";
-import { ProtocolTreePane } from "./panes/ProtocolTreePane";
 import { HexDumpPane } from "./panes/HexDumpPane";
 import { PacketList } from "./PacketList/PacketList";
 import { buildPacketDetails } from "@/views/PacketDetail/buildPacketDetails";
+import type { PacketDetails, SelectedField } from "@/views/PacketDetail/types";
+import { PaneHeader } from "./PaneHeader";
+import { PacketDetailsPane } from "./PacketDetail/PacketDetails";
 
 interface Props {
   file: File;
@@ -16,7 +18,9 @@ interface Props {
 export function WorkSpace({ file, onBack }: Props) {
   const [packets, setPackets] = useState<PacketRecord[]>([]);
 
-  const [selectedIndex, setSelectIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [protocolDetail, setProtocolDetail] = useState<PacketDetails[]>([])
+  const [selectedField, setSelectedField] = useState<SelectedField>(null)
 
   const [topBodyHeight, setTopBodyHeight] = useState(0);
 
@@ -24,7 +28,7 @@ export function WorkSpace({ file, onBack }: Props) {
 
   const getInitialSizes = () => ({
     top: Math.floor(window.innerHeight * 0.55),
-    left: Math.floor(window.innerWidth * 0.4)
+    left: Math.floor(window.innerWidth * 0.55)
   });
 
   const [topHeight, setTopHeight] = useState(getInitialSizes().top);
@@ -65,10 +69,18 @@ export function WorkSpace({ file, onBack }: Props) {
   const handleSelect = useCallback((index: number) => {
     const packet = packets[index];
     if(!packet) return;
-    setSelectIndex(index)
+
+    setSelectedIndex(index)
+
     const details = buildPacketDetails(packet)
-    console.log(details)
+    setProtocolDetail(details);
+    setSelectedField(null);
+    // console.log(details)
   }, [packets]);
+
+  const handleFieldSelect = useCallback((field: SelectedField) =>{
+    setSelectedField(field);
+  }, [])
   return (
     <div className="h-screen flex flex-col bg-bg-primary overflow-hidden">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>
@@ -88,8 +100,15 @@ export function WorkSpace({ file, onBack }: Props) {
       <HorizontalResizeHandle onResize={handleHorizontalResize}/>
 
       <div className="flex-1 flex overflow-hidden">
-        <div style={{width: leftWidth}} className="shrink-0">
-          <ProtocolTreePane/>
+        <div style={{width: leftWidth}} className="shrink-0 flex flex-col">
+          <PaneHeader leftText="Packet Details"/>
+          <div className="flex-1 overflow-hidden">
+            <PacketDetailsPane
+            protocols={protocolDetail}
+            selectedField={ selectedField}
+            onFieldSelect={handleFieldSelect}
+            />
+          </div>
         </div>
 
         <VertocalResizeHandle onResize={handleVerticalResize}/>
