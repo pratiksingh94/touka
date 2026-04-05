@@ -20,8 +20,11 @@ the stuff changing duh dawg
 - created the 3 pane UI with resize handles
 - created Packet List pane, shows all packets
 
-# 04-04-2026
+### 04-04-2026
 - added "Details Builder" function which takes a packet and gives it's details of the protocols in a flat array, it will be used to show data on UI
 - made ICMP and ICMPv6 save `icmpType` in the struct too for ease in details building
 - removed the type `flag: number` from IPv4 and made it a boolean object
 - fixed a typo in `etherTypes` constant
+
+### 05-04-2026
+- connected details builder functions with UI, now displays packet details in details pane
