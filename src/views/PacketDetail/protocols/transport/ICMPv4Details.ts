@@ -17,8 +17,8 @@ export function buildICMPv4Details(p: ICMPv4Packet, offset: number): DetailsBuil
       offset,
       length: p.raw.length,
       fields: [
-        {label: "Type", value: `${typeName} (${p.icmpType})`, offset: offset + 0, length: 1},
-        {label: "Code", value: codeName ? `${codeName} (${p.code})` : `${p.code}`, offset: offset + 1, length: 1},
+        {label: "Type", value: `${typeName} (${p.icmpType})`, offset:  0, length: 1},
+        {label: "Code", value: codeName ? `${codeName} (${p.code})` : `${p.code}`, offset:  1, length: 1},
       ]
     }
   }

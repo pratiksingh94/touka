@@ -10,9 +10,9 @@ export function buildUDPDetails(p: UDPPacket, offset: number): DetailsBuilderRes
       offset,
       length: 8,
       fields: [
-        {label: "Source Port", value: `${p.srcPort}`, offset: offset + 0, length: 2},
-        {label: "Destination Port", value: `${p.dstPort}`, offset: offset + 2, length: 2},
-        {label: "Length", value: `${p.length}`, offset: offset + 4, length: 2},
+        {label: "Source Port", value: `${p.srcPort}`, offset:  0, length: 2},
+        {label: "Destination Port", value: `${p.dstPort}`, offset:  2, length: 2},
+        {label: "Length", value: `${p.length}`, offset:  4, length: 2},
       ]
     }
   }

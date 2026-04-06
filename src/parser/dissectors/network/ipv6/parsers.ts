@@ -32,9 +32,9 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
   const dst = toIPv6(reader.readBytes(16));
 
 
-  const EXTENSTION_HEADERS = new Set([0, 43, 44, 60])
+  const EXTENSION_HEADERS = new Set([0, 43, 44, 60])
   const headerExts: IPv6ExtensionHeader[] = [];
-  while(EXTENSTION_HEADERS.has(nextHeader)) {
+  while(EXTENSION_HEADERS.has(nextHeader)) {
     const type = nextHeader;
     nextHeader = reader.readUInt8();
     const headerExtLength = (reader.readUInt8() + 1) * 8;
@@ -58,7 +58,7 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
     hopLimit,
     src,
     dst,
-    extenstionHeaders: headerExts,
+    extensionHeaders: headerExts,
     payload,
     raw
   }

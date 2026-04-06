@@ -16,7 +16,7 @@ export type IPv6Packet = {
   hopLimit: number;
   src: string;
   dst: string;
-  extenstionHeaders: IPv6ExtensionHeader[];
+  extensionHeaders: IPv6ExtensionHeader[];
   payload: TransportLayer;
   raw: Uint8Array;
 }

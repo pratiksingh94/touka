@@ -28,3 +28,8 @@ the stuff changing duh dawg
 
 ### 05-04-2026
 - connected details builder functions with UI, now displays packet details in details pane
+
+### 07-04-2026
+- changed offset values from absolute to relative in details builders
+- fixed problems in IPv6 builder
+- fixed header length in TCP builder
