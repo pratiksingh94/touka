@@ -15,12 +15,26 @@ interface Props {
   onBack: () => void;
 }
 
+function findProtocolIndexAtOffset(protocols: PacketDetails[], offset: number) {
+  for(let i = 0; i < protocols.length; i++) {
+    const p = protocols[i];
+    console.log(p);
+    if(offset >= p.offset && offset < p.offset + p.length) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+
 export function WorkSpace({ file, onBack }: Props) {
   const [packets, setPackets] = useState<PacketRecord[]>([]);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [protocolDetail, setProtocolDetail] = useState<PacketDetails[]>([])
   const [selectedField, setSelectedField] = useState<SelectedField>(null)
+  const [autoExpandProtocolIndex, setautoExpandProtocolIndex] = useState<number | null>(null);
 
   const [topBodyHeight, setTopBodyHeight] = useState(0);
 
@@ -76,11 +90,16 @@ export function WorkSpace({ file, onBack }: Props) {
     setProtocolDetail(details);
     setSelectedField(null);
     // console.log(details)
+    setautoExpandProtocolIndex(null);
   }, [packets]);
 
-  const handleFieldSelect = useCallback((field: SelectedField) =>{
+  const handleFieldSelect = useCallback((field: SelectedField, offset?: number) =>{
     setSelectedField(field);
-  }, [])
+    if(offset !== undefined) {
+      const idx = findProtocolIndexAtOffset(protocolDetail, offset);
+      setautoExpandProtocolIndex(idx)
+    }
+  }, [protocolDetail])
   return (
     <div className="h-screen flex flex-col bg-bg-primary overflow-hidden">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>
@@ -104,6 +123,7 @@ export function WorkSpace({ file, onBack }: Props) {
             <PacketDetailsPane
             protocols={protocolDetail}
             selectedField={ selectedField}
+            autoExpandProtocolIndex={autoExpandProtocolIndex}
             onFieldSelect={handleFieldSelect}
             />
           </div>

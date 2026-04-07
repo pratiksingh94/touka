@@ -4,10 +4,11 @@ import { ProtocolBlock } from "./ProtocolBlock";
 interface Props {
   protocols: PacketDetails[];
   selectedField: SelectedField;
-  onFieldSelect: (field: SelectedField) => void;
+  autoExpandProtocolIndex: number | null; // long ahh name dawg
+  onFieldSelect: (field: SelectedField, offset?: number) => void;
 }
 
-export function PacketDetailsPane({protocols, selectedField, onFieldSelect}: Props) {
+export function PacketDetailsPane({protocols, selectedField, autoExpandProtocolIndex, onFieldSelect}: Props) {
   return (
     <div className="flex flex-col h-full overflow-auto bg-bg-primary">
       {protocols.length === 0 ? (
@@ -19,8 +20,10 @@ export function PacketDetailsPane({protocols, selectedField, onFieldSelect}: Pro
           <ProtocolBlock
           key={`${prot.title}-${i}`}
           protocol={prot}
+          protocolIndex={i}
           isFirst={i === 0}
           selectedField={selectedField}
+          autoExpand={autoExpandProtocolIndex ===i}
           onFieldSelect={onFieldSelect}
           />
         ))

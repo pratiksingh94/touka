@@ -1,16 +1,27 @@
 import type { PacketDetails, SelectedField } from "@/views/PacketDetail/types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DetailsField } from "./DetailsField";
 
 interface Props {
   protocol: PacketDetails;
+  protocolIndex: number;
   isFirst: boolean;
   selectedField: SelectedField;
-  onFieldSelect: (field: SelectedField) => void;
+  autoExpand: boolean;
+  onFieldSelect: (field: SelectedField, offset?: number) => void;
 }
 
-export function ProtocolBlock({ protocol, isFirst, selectedField, onFieldSelect }: Props) {
+export function ProtocolBlock({ protocol, isFirst, selectedField, autoExpand, onFieldSelect }: Props) {
   const [expanded, setExpanded] = useState(false);
+  const prevAutoExpand = useRef(false);
+
+  useEffect(() => {
+    if(autoExpand && !prevAutoExpand.current) {
+      setExpanded(true);
+    }
+
+    prevAutoExpand.current = autoExpand;
+  }, [autoExpand])
 
   return (
     <div className={isFirst ? "" : "border-t border-border"}>

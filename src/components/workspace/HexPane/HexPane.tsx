@@ -11,7 +11,7 @@ interface Props {
   raw: Uint8Array | null;
   protocols: PacketDetails[];
   selectedField: SelectedField;
-  onFieldSelect: (field: SelectedField) => void;
+  onFieldSelect: (field: SelectedField, offset: number) => void;
 }
 
 const BYTES_PER_ROW = 16;
@@ -37,7 +37,7 @@ export function HexPane({ raw, protocols, selectedField, onFieldSelect}: Props) 
   const handleByteClick = (offset: number) => {
     const field = findFieldAtOffset(protocols, offset);
 
-    onFieldSelect(field);
+    onFieldSelect(field, offset);
   }
 
   return (
