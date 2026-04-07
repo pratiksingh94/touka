@@ -18,7 +18,7 @@ interface Props {
 function findProtocolIndexAtOffset(protocols: PacketDetails[], offset: number) {
   for(let i = 0; i < protocols.length; i++) {
     const p = protocols[i];
-    console.log(p);
+    // console.log(p);
     if(offset >= p.offset && offset < p.offset + p.length) {
       return i
     }

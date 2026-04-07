@@ -12,8 +12,8 @@ Made with no external library for analysis or parsing!
 ![home page](https://cdn.hackclub.com/019d26a1-9a14-7e91-9b6c-dd7089b50f0d/localhost_5174_.png)
 
 ## To-Do (vague asf)
-1. create hex dump pane
-2. add more link layer stuff
+1. add more link layer stuff
+2. add more details in detail builders like checksum to keep all the struct data
 
 ## Things that i did but not completely (this is for me):
 1. complete ICMP builder functions with NDP stuff
