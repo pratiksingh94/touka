@@ -3,12 +3,12 @@ import { WorkspaceHeader } from "./WorkspaceHeader";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PacketRecord } from "@/parser/core/types";
 import { HorizontalResizeHandle, VertocalResizeHandle } from "./ResizeHandle";
-import { HexDumpPane } from "./panes/HexDumpPane";
 import { PacketList } from "./PacketList/PacketList";
 import { buildPacketDetails } from "@/views/PacketDetail/buildPacketDetails";
 import type { PacketDetails, SelectedField } from "@/views/PacketDetail/types";
 import { PaneHeader } from "./PaneHeader";
 import { PacketDetailsPane } from "./PacketDetail/PacketDetails";
+import { HexPane } from "./HexPane/HexPane";
 
 interface Props {
   file: File;
@@ -85,8 +85,6 @@ export function WorkSpace({ file, onBack }: Props) {
     <div className="h-screen flex flex-col bg-bg-primary overflow-hidden">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>
 
-
-      {/* FIRST PANE, PACKET LIST  */}
       <div className="shrink-0" style={{height: topHeight}}>
         <div ref={topPaneRef} className="h-full flex flex-col">
           <PacketList
@@ -113,8 +111,13 @@ export function WorkSpace({ file, onBack }: Props) {
 
         <VertocalResizeHandle onResize={handleVerticalResize}/>
 
-      <div className="flex-1">
-        <HexDumpPane/>
+      <div className="flex-1 min-w-0 overflow-hidden">
+        <HexPane
+        raw={selectedIndex !== null ? packets[selectedIndex].raw : null}
+        protocols={protocolDetail}
+        selectedField={selectedField}
+        onFieldSelect={handleFieldSelect}
+        />
       </div>
       </div>
     </div>

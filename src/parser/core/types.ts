@@ -25,7 +25,8 @@ export type PacketHeader = {
 
 export type PacketRecord = {
   header: PacketHeader;
-  data: LinkLayer
+  data: LinkLayer;
+  raw: Uint8Array;
 }
 
 export type PCAP = {

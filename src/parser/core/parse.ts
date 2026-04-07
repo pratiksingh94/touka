@@ -40,7 +40,8 @@ async function parsePCAP(file: File) {
 
     packets.push({
       header,
-      data
+      data,
+      raw: rawData // possible problem <-
     })
   }
 

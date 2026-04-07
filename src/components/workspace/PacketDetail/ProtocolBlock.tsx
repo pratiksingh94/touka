@@ -36,6 +36,7 @@ export function ProtocolBlock({ protocol, isFirst, selectedField, onFieldSelect 
             key={`${f.offset}-${i}`}
             field={f}
             depth={1}
+            baseOffset={protocol.offset}
             selectedField={selectedField}
             onFieldSelect={onFieldSelect}
             />
