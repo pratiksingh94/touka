@@ -7,18 +7,19 @@ export function InfoSection() {
     <div className="max-w-3xl mx-auto space-y-10 text-left pb-12">
       
     <section>
+      <h3 className="text-xs font-medium text-accent uppercase tracking-wider mb-3">
+        Note to ship reviewers, voters, and visitors!
+      </h3>
+      <DevNotes/>
+    </section>
+
+    <section>
       <h3 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">
         About
       </h3>
       <About/>
     </section>
 
-    <section>
-      <h3 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">
-        notes from developer
-      </h3>
-      <DevNotes/>
-    </section>
 
     <section>
       <h3 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-3">
