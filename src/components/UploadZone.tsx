@@ -1,11 +1,17 @@
 import { useState } from "react";
 
+const isValidPCAPFIle = (file: File) => {
+  return file.name.toLowerCase().endsWith(".pcap")
+}
+
 export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
   const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null)
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(true);
+    setError(null);
   }
 
   const handleDragLeave = (e: React.DragEvent) => {
@@ -16,20 +22,29 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
+    setError(null);
+
     const file = e.dataTransfer.files[0];
-    if (file && file.name.endsWith(".pcap")) {
+    if(isValidPCAPFIle(file)) {
       onFileSelect(file);
+    } else {
+      setError("Only .pcap files are supported!")
     }
   }
 
   const handleClick = () => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".pcap"
+    input.accept = ".pcap,application/vnd.tcpdump.pcap,application/octet-stream"
     input.onchange  = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if(file) {
-        onFileSelect(file);
+        if(isValidPCAPFIle(file)) {
+          setError(null);
+          onFileSelect(file)
+        } else {
+          setError("Only .pcap files are supported!")
+        }
       }
     }
 
@@ -39,6 +54,7 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
 
   const handleLoadSample = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    setError(null);
     try {
       const res = await fetch("/test-samples/test.pcap");
       const blob = await res.blob();
@@ -46,7 +62,7 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
 
       onFileSelect(file);
     } catch (err) {
-      console.error("failed to load sample file");
+      console.error("failed to load sample file", error);
     }
   }
 
@@ -77,6 +93,10 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
           <p className="text-text-secondary text-sm">Drop a .pcap file here or click upload</p>
         </div>
       </div>
+
+      {error && (
+        <div className="text-red-500 text-xs text-center">{error}</div>
+      )}
 
       <div className="flex items-center gap-4">
         <div className="flex-1 h-px bg-border"/>
