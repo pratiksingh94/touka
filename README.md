@@ -9,7 +9,7 @@ Made with no external library for analysis or parsing!
 
 ## Screenshots
 
-![home page](https://cdn.hackclub.com/019d26a1-9a14-7e91-9b6c-dd7089b50f0d/localhost_5174_.png)
+![ss](https://cdn.hackclub.com/019d6b5c-8cd0-7d3f-af2a-80fc34a8f42f/image.png)
 
 
 ## Testing
@@ -52,6 +52,21 @@ Use Wireshark/Tcpdump to capture your own network traffic and upload the `.pcap`
 
 > This project runs entirely on the client side. Your files are not uploaded or stored anywhere!!
 
+
+
+## Run locally
+```bash
+# clone repo
+git clone https://github.com/pratiksingh94/touka.git
+
+cd touka/
+
+# or pnpm, yarn, whatever
+npm insall
+
+# run it!
+npm run dev
+```
 
 
 ## To-Do (vague asf)
