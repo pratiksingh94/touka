@@ -29,8 +29,13 @@ the stuff changing duh dawg
 ### 05-04-2026
 - connected details builder functions with UI, now displays packet details in details pane
 
-### 08-04-2026
+### 07-04-2026 - 08-04-2026
 - changed offset values from absolute to relative in details builders
 - fixed problems in IPv6 builder
 - fixed header length in TCP builder
 - MADE HEX DUMP PANE, STABLE RIGHT NOW AFTER HOURSSSS, needs some changes tho
+
+### 08-04-2026
+- added pcap generation code using python 
+- added sample test file
+- added error on uploading non-PCAP file
