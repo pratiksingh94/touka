@@ -1,11 +1,13 @@
 export function DevNotes() {
   return (
     <div className="text-sm text-text-secondary space-y-2">
-      <p>This project is still under active development :3 expect incomplete features and frequent changes!</p>
+      <p className="mb-5">This project is still under active development :3 expect incomplete features and frequent changes!</p>
       
-      <p>
+      <p className="mb-5">
         Currently, only the Ethernet link layer and its related protocols (IP, TCP, UDP, ICMP, ARP) are supported.
         More protocols will be added over time.
+        <br/>
+        Application Layer will also be added soon after TCP Reassembly is done.
       </p>
 
       {/* <p>
