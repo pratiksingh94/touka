@@ -15,8 +15,8 @@ export function buildIPv6Details(ip: IPv6Packet, offset: number): DetailsBuilder
     {label: "Payload Length", value: `${ip.payloadLength} bytes`, offset: 4, length: 2},
     {label: "Next Header", value: `${ip.nextHeader} (${IP_PROTOCOL_NAMES[ip.nextHeader] ?? IPv6_EXT_HEADER_NAMES[ip.nextHeader] ?? "Unknown"})`, offset: 6, length: 1},
     {label: "Hop Limit", value: `${ip.hopLimit}`, offset: 7, length: 1},
-    {label: "Source", value: ip.src, offset: 8, length: 16},
-    {label: "Destination", value: ip.dst, offset: 24, length: 16}
+    {label: "Source", value: ip.srcIP, offset: 8, length: 16},
+    {label: "Destination", value: ip.dstIP, offset: 24, length: 16}
   ];
 
   if(ip.extensionHeaders.length > 0) {
@@ -38,7 +38,7 @@ export function buildIPv6Details(ip: IPv6Packet, offset: number): DetailsBuilder
     headerLength: totalLength,
     details: {
       title: "Internet Protocol Version 6",
-      summary: `${abbreviateIPv6(ip.src)} -> ${abbreviateIPv6(ip.dst)}`,
+      summary: `${abbreviateIPv6(ip.srcIP)} -> ${abbreviateIPv6(ip.dstIP)}`,
       offset,
       length: totalLength,
       fields

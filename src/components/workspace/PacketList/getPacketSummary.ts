@@ -28,7 +28,7 @@ function getSrcDst(packet: PacketRecord): {src: string; dst: string} {
       return {src: payload.srcIP, dst: payload.dstIP}
     }
     if(payload.type === "ipv6") {
-      return {src: abbreviateIPv6(payload.src), dst: abbreviateIPv6(payload.dst)}
+      return {src: abbreviateIPv6(payload.srcIP), dst: abbreviateIPv6(payload.dstIP)}
     }
     if(payload.type === "arp") {
       return {src: payload.senderIP, dst: payload.targetIP}

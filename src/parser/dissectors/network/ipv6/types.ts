@@ -14,8 +14,8 @@ export type IPv6Packet = {
   payloadLength: number;
   nextHeader: number;
   hopLimit: number;
-  src: string;
-  dst: string;
+  srcIP: string;
+  dstIP: string;
   extensionHeaders: IPv6ExtensionHeader[];
   payload: TransportLayer;
   raw: Uint8Array;
