@@ -39,3 +39,8 @@ the stuff changing duh dawg
 - added pcap generation code using python 
 - added sample test file
 - added error on uploading non-PCAP file
+
+
+### 12-04-2026
+- completed TCP Reassembly
+- created HTTP/1.1 parser

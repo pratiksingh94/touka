@@ -47,9 +47,8 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
     })
   }
 
-  const payload = dispatchTransport(nextHeader, reader.readRemaining())
-
-  return {
+  
+  const ip: IPv6Packet = {
     type: "ipv6",
     trafficClass,
     flowLabel,
@@ -59,7 +58,10 @@ export function parseIPv6(raw: Uint8Array): IPv6Packet {
     srcIP,
     dstIP,
     extensionHeaders: headerExts,
-    payload,
+    payload: null!,
     raw
   }
+  ip.payload = dispatchTransport(nextHeader, ip, reader.readRemaining())
+
+  return ip;
 }

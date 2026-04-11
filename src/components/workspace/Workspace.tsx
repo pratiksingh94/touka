@@ -50,7 +50,10 @@ export function WorkSpace({ file, onBack }: Props) {
 
   useEffect(() => {
     parsePCAP(file)
-    .then(result => setPackets(result.packets))
+    .then(result => {
+      setPackets(result.packets)
+      console.log(result.streams)
+    })
     .catch(console.error)
   }, [file])
 

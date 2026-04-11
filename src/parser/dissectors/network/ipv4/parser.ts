@@ -56,9 +56,8 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
   }
 
   const rawPayload = raw.slice(ihl);
-  const payload = dispatchTransport(protocol, rawPayload)
-
-  return {
+  
+  const ip: IPv4Packet = {
     type: "ipv4",
     ihl,
     totalLength,
@@ -69,9 +68,13 @@ function parseIPv4(raw: Uint8Array): IPv4Packet {
     protocol,
     srcIP,
     dstIP,
-    payload,
+    payload: null!,
     raw
   }
+
+  ip.payload = dispatchTransport(protocol, ip, rawPayload)
+
+  return ip;
 }
 
 export {parseIPv4}

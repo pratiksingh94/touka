@@ -1,10 +1,20 @@
 class TCPStream {
+  private initialized = false;
   private nextExpectedSeq: number = 0;
   private buffer: Map<number, Uint8Array> = new Map();
   private reassembled: Uint8Array[] = [];
 
+  initialize(initialSeq: number) {
+    this.initialized = true;
+    this.nextExpectedSeq = initialSeq;
+  }
+
   ingest(seq: number, data: Uint8Array) {
     if(data.length === 0) return;
+
+    if(!this.initialized) {
+      this.initialize(seq);
+    }
 
     // case one: the thingamajig is in order, just push it to array
     if(seq === this.nextExpectedSeq) {

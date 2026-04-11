@@ -1,9 +1,11 @@
+import { StreamTracker } from "@/TCPReassembly/StreamTracker";
 import { dispatchLink } from "../dissectors/link/dispatch";
 import { parseGlobalHeaders, parsePacketHeader } from "../file/pcap";
 import { BinaryReader } from "./BinaryReader";
-import type { PacketRecord } from "./types";
+import type { PacketRecord, PCAP } from "./types";
+import { setTransportHook } from "../dissectors/transport/dispatch";
 
-async function parsePCAP(file: File) {
+async function parsePCAP(file: File): Promise<PCAP> {
   const reader = new BinaryReader(await file.arrayBuffer());
 
   const magic = reader.readUInt32();
@@ -31,7 +33,11 @@ async function parsePCAP(file: File) {
 
   const globalHeaders = parseGlobalHeaders(reader, littleEndian, timestampResolution);
   
+  const streamTracker = new StreamTracker();
+  setTransportHook((tcp, ip) => streamTracker.ingest(tcp, ip));
+
   const packets: PacketRecord[] = [];
+
   while(reader.offset + 16 <= reader.byteLength) {
     const header = parsePacketHeader(reader, timestampResolution);
 
@@ -41,11 +47,11 @@ async function parsePCAP(file: File) {
     packets.push({
       header,
       data,
-      raw: rawData // possible problem <-
+      raw: rawData
     })
   }
 
-  return { globalHeaders, packets }
+  return { globalHeaders, packets, streams: streamTracker.getCompleted() }
 }
 
 export {parsePCAP}

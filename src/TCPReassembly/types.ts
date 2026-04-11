@@ -1,3 +1,5 @@
+import type { ApplicationLayer } from "@/parser/dissectors/application/types";
+
 export type StreamKey = string;
 
 
@@ -5,7 +7,7 @@ export type ReassembledStream = {
   streamKey: StreamKey;
   clientToServer: Uint8Array;
   serverToClient: Uint8Array;
-  // application?: something something
+  application?: ApplicationLayer
 }
 
 
@@ -14,5 +16,5 @@ export function makeStreamKey(ipA: string, portA: number, ipB: string, portB: nu
   const sideA = `${ipA}:${portA}`;
   const sideB = `${ipB}:${portB}`;
 
-  return sideA < sideB ? `${sideA}<->${sideB}` : `${sideB}:${sideA}`;
+  return sideA < sideB ? `${sideA}<->${sideB}` : `${sideB}<->${sideA}`;
 }

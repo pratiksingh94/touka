@@ -1,3 +1,4 @@
+import type { ReassembledStream } from "@/TCPReassembly/types";
 import type { LinkLayer } from "../dissectors/link/types";
 import type { LinkType } from "./constants";
 
@@ -31,6 +32,7 @@ export type PacketRecord = {
 
 export type PCAP = {
   globalHeaders: GlobalHeader;
-  packets: PacketRecord[]
+  packets: PacketRecord[];
+  streams: ReassembledStream[]
 }
 
