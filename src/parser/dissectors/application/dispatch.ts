@@ -1,12 +1,14 @@
 import type { ApplicationLayer, UnknownApplicationLayer } from "./types";
 import { parseHTTP } from "./HTTP1.1/parser"
+import { parseFTP } from "./FTP/parser";
 
 
 type ApplicationParser = (clientToServerRaw: Uint8Array, serverToClientRaw: Uint8Array) => ApplicationLayer;
 
 const ApplicationRegistry: Partial<Record<number, ApplicationParser>> = {
   80: parseHTTP,
-  8080: parseHTTP
+  8080: parseHTTP,
+  21: parseFTP
 }
 
 export function dispatchApplication(protocol: number, clientToServerRaw: Uint8Array, serverToClientRaw: Uint8Array): ApplicationLayer {

@@ -40,7 +40,7 @@ export function parseTCP(raw: Uint8Array): TCPPacket {
   const SYN = Boolean((byte13 >> 1) & 0x01);
   const FIN = Boolean((byte13 >> 0) & 0x01);
 
-  reader.skip(offset - 20);
+  reader.skip(offset - 14);
   const payloadLength = raw.byteLength - offset;
   const payload = reader.readBytes(payloadLength);
 

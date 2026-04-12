@@ -65,6 +65,7 @@ function getProtocol(packet: PacketRecord): string {
     const tcp = transport as TCPPacket;
     if(tcp.dstPort === 80 || tcp.srcPort === 80 || tcp.srcPort === 8080 || tcp.dstPort === 8080) return "HTTP";
     if(tcp.dstPort === 443 || tcp.srcPort === 443) return "TLS";
+    if(tcp.dstPort === 21 || tcp.srcPort === 21) return "FTP";
     return "TCP";
   }
 

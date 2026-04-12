@@ -27,7 +27,8 @@ const PROTOCOL_COLORS: Record<string, string> = {
   udp: "#98c379",
   dns: "#e5c07b",
   http: "#98c379",
-  tls: "#e06c75"
+  tls: "#e06c75",
+  ftp: "#d19a66"
 }
 
 const SELECTED_BG = "#1f3a5f";

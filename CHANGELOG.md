@@ -41,6 +41,10 @@ the stuff changing duh dawg
 - added error on uploading non-PCAP file
 
 
-### 12-04-2026
+### 12-04-2026 (midnight)
 - completed TCP Reassembly
 - created HTTP/1.1 parser
+
+### 12-04-2036 (evening)
+- created FTP parser
+- fixed binary leaking from TCP

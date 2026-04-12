@@ -86,11 +86,30 @@ class StreamTracker {
     }
   }
 
+  flush() {
+    for (const [key, entry] of this.streams.entries()) {
+      entry.clientToServer.drain();
+      entry.serverToClient.drain();
+
+      const clientBytes = entry.clientToServer.getReassembled();
+      const serverBytes = entry.serverToClient.getReassembled();
+
+      const application = dispatchApplication(entry.serverPort, clientBytes, serverBytes);
+
+      this.completed.push({
+        streamKey: key,
+        clientToServer: clientBytes,
+        serverToClient: serverBytes,
+        application
+      })
+    }
+
+    this.streams.clear();
+  }
 
   getCompleted() {
     return this.completed;
   }
 }
-
 
 export {StreamTracker}

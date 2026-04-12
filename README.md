@@ -72,6 +72,8 @@ npm run dev
 ## To-Do (vague asf)
 1. add more link layer stuff
 2. add more details in detail builders like checksum to keep all the struct data
+3. make application layer protocol names and stuff in summary not have if else 
+4. move color of protocols to constant
 
 ## Things that i did but not completely (this is for me):
 1. complete ICMP builder functions with NDP stuff

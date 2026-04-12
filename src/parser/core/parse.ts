@@ -51,6 +51,8 @@ async function parsePCAP(file: File): Promise<PCAP> {
     })
   }
 
+  streamTracker.flush();
+
   return { globalHeaders, packets, streams: streamTracker.getCompleted() }
 }
 
