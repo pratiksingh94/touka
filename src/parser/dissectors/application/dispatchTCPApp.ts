@@ -11,7 +11,7 @@ const ApplicationRegistry: Partial<Record<number, ApplicationParser>> = {
   21: parseFTP
 }
 
-export function dispatchApplication(protocol: number, clientToServerRaw: Uint8Array, serverToClientRaw: Uint8Array): ApplicationLayer {
+export function dispatchTCPApplication(protocol: number, clientToServerRaw: Uint8Array, serverToClientRaw: Uint8Array): ApplicationLayer {
   const parser = ApplicationRegistry[protocol];
 
   if(!parser) {

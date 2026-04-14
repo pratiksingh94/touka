@@ -3,7 +3,7 @@ import { TCPStream } from "./TCPStream";
 import { makeStreamKey, type ReassembledStream, type StreamKey } from "./types";
 import type { IPv4Packet } from "@/parser/dissectors/network/ipv4/types";
 import type { IPv6Packet } from "@/parser/dissectors/network/ipv6/types";
-import { dispatchApplication } from "@/parser/dissectors/application/dispatch";
+import { dispatchTCPApplication } from "@/parser/dissectors/application/dispatchTCPApp";
 
 
 type StreamEntry = {
@@ -73,7 +73,7 @@ class StreamTracker {
       const clientBytes = entry.clientToServer.getReassembled();
       const serverBytes = entry.serverToClient.getReassembled();
 
-      const application = dispatchApplication(entry.serverPort, clientBytes, serverBytes);
+      const application = dispatchTCPApplication(entry.serverPort, clientBytes, serverBytes);
 
       this.completed.push({
         streamKey: key,
@@ -94,7 +94,7 @@ class StreamTracker {
       const clientBytes = entry.clientToServer.getReassembled();
       const serverBytes = entry.serverToClient.getReassembled();
 
-      const application = dispatchApplication(entry.serverPort, clientBytes, serverBytes);
+      const application = dispatchTCPApplication(entry.serverPort, clientBytes, serverBytes);
 
       this.completed.push({
         streamKey: key,

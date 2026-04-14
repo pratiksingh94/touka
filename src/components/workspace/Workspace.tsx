@@ -52,7 +52,8 @@ export function WorkSpace({ file, onBack }: Props) {
     parsePCAP(file)
     .then(result => {
       setPackets(result.packets)
-      console.log(result.streams)
+      console.log(result.packets[6].data)
+      console.log(result.packets[7].data)
     })
     .catch(console.error)
   }, [file])
