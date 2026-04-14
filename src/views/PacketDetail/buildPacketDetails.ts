@@ -1,6 +1,6 @@
 import type { PacketRecord } from "@/parser/core/types";
 import type { PacketDetails } from "./types";
-import { LINK_BUILDERS, NET_BUILDERS, TRANSPORT_BUILDERS } from "./registry";
+import { APPLICATION_BUILDERS, LINK_BUILDERS, NET_BUILDERS, TRANSPORT_BUILDERS } from "./registry";
 
 export function buildPacketDetails(p: PacketRecord ): PacketDetails[] {
   const detailsArr: PacketDetails[] = [];
@@ -32,6 +32,17 @@ export function buildPacketDetails(p: PacketRecord ): PacketDetails[] {
     const {headerLength, details} = transportBuilder(transport, offset)
     detailsArr.push(details);
     offset += headerLength;
+
+    if(transport.type === "udp") {
+      const appPayload = transport.payload;
+      if(appPayload && appPayload.type === "DNS") {
+        const appBuilder = APPLICATION_BUILDERS["DNS"];
+        if(appBuilder) {
+          const appResult = appBuilder(appPayload, offset);
+          detailsArr.push(appResult.details)
+        }
+      }
+    }
   }
 
   return detailsArr

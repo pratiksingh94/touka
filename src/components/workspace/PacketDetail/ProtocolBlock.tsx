@@ -44,10 +44,12 @@ export function ProtocolBlock({ protocol, isFirst, selectedField, autoExpand, on
         <div>
           {protocol.fields.map((f, i) => (
             <DetailsField
-            key={`${f.offset}-${i}`}
+            key={`${f.label}-${i}`}
             field={f}
             depth={1}
             baseOffset={protocol.offset}
+            protocolOffset={protocol.offset}
+            protocolLength={protocol.length}
             selectedField={selectedField}
             onFieldSelect={onFieldSelect}
             />

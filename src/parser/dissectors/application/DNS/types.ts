@@ -47,5 +47,6 @@ export type DNSPacket = {
   questions: DNSQuestion[];
   answers: DNSResourceRecord[];
   authority: DNSResourceRecord[];
-  additional: DNSResourceRecord[]
+  additional: DNSResourceRecord[];
+  raw: Uint8Array;
 }

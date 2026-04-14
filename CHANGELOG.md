@@ -45,6 +45,10 @@ the stuff changing duh dawg
 - completed TCP Reassembly
 - created HTTP/1.1 parser
 
-### 12-04-2036 (evening)
+### 12-04-2026 (evening)
 - created FTP parser
 - fixed binary leaking from TCP
+
+### 14-04-2026
+- created DNS parser
+- added DNS parser into UI (packet details pane)

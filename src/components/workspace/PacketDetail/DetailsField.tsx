@@ -7,6 +7,8 @@ interface Props {
   field: PacketField;
   depth: number;
   baseOffset: number;
+  protocolOffset: number;
+  protocolLength: number;
   selectedField: SelectedField;
   onFieldSelect: (field: SelectedField) => void;
 }
@@ -15,26 +17,37 @@ export function DetailsField({
   field,
   depth,
   baseOffset,
+  protocolOffset,
+  protocolLength,
   selectedField,
   onFieldSelect,
 }: Props) {
   const [expanded, setExpanded] = useState(false);
   const hasChildren = field.children && field.children.length > 0;
 
-  const absoluteOffset = baseOffset + field.offset;
+  const absoluteOffset = baseOffset + (field.offset ?? 0)
+  const fieldLength = field.length ?? protocolLength;
 
   const isSelected =
     selectedField?.offset === absoluteOffset &&
-    selectedField?.length === field.length;
+    selectedField?.length === fieldLength;
 
   const handleClick = () => {
-    onFieldSelect({ offset: absoluteOffset, length: field.length });
+    if(field.offset !== undefined && field.length !== undefined) {
+      onFieldSelect({offset: absoluteOffset, length: field.length})
+    } else {
+      onFieldSelect({offset: protocolOffset, length: protocolLength})
+    }
   };
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setExpanded(!expanded);
-    onFieldSelect({ offset: absoluteOffset, length: field.length });
+    if(field.offset !== undefined && field.length !== undefined) {
+      onFieldSelect({ offset: absoluteOffset, length: field.length})
+    } else {
+      onFieldSelect({offset: protocolOffset, length: protocolLength})
+    }
   };
 
   return (
@@ -63,10 +76,12 @@ export function DetailsField({
         <div onClick={handleClick}>
           {field.children!.map((ch, i) => (
             <DetailsField
-              key={`${ch.offset}-${i}`}
+              key={`${ch.label}-${i}`}
               field={ch}
               depth={depth + 1}
               baseOffset={baseOffset}
+              protocolOffset={protocolOffset}
+              protocolLength={protocolLength}
               selectedField={selectedField}
               onFieldSelect={onFieldSelect}
             />

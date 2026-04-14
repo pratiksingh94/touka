@@ -177,8 +177,8 @@ export function parseDNS(raw: Uint8Array): DNSPacket {
   const additional: DNSResourceRecord[] = [];
   for(let i = 0; i < arCount; i++) {
     const { record, endOffset} = readResourceRecord(raw, reader.offset);
-    additional.push(record),
-    reader.offset = endOffset
+    additional.push(record);
+    reader.offset = endOffset;
   }
 
 
@@ -190,6 +190,7 @@ export function parseDNS(raw: Uint8Array): DNSPacket {
     questions,
     answers,
     authority,
-    additional
+    additional,
+    raw
   }
 }

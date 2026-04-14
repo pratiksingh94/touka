@@ -1,3 +1,4 @@
+import { buildDNSDetails } from "./protocols/application/DNSDetails";
 import { buildEthernetDetails } from "./protocols/link/ethernetDetails";
 import { buildARPDetails } from "./protocols/network/ARPDetails";
 import { buildIPv4Details } from "./protocols/network/IPv4Details";
@@ -25,4 +26,8 @@ export const TRANSPORT_BUILDERS: Partial<Record<string, DetailsBuilder<any>>> = 
   udp: buildUDPDetails,
   icmpv4: buildICMPv4Details,
   icmpv6: buildICMPv6Details,
+}
+
+export const APPLICATION_BUILDERS: Partial<Record<string, DetailsBuilder<any>>> = {
+  DNS: buildDNSDetails
 }

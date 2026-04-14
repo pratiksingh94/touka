@@ -8,9 +8,9 @@ export type PacketDetails = {
 
 export type PacketField = {
   label: string;
-  value: string;
-  offset: number;
-  length: number;
+  value?: string;
+  offset?: number;
+  length?: number;
   children?: PacketField[]
 }
 
