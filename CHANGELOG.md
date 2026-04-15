@@ -52,3 +52,7 @@ the stuff changing duh dawg
 ### 14-04-2026
 - created DNS parser
 - added DNS parser into UI (packet details pane)
+
+### 15-04-2026
+- started UI work for TCP based applicaiton layer protocols
+- did HTTP

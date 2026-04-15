@@ -9,6 +9,8 @@ import type { PacketDetails, SelectedField } from "@/views/PacketDetail/types";
 import { PaneHeader } from "./PaneHeader";
 import { PacketDetailsPane } from "./PacketDetail/PacketDetails";
 import { HexPane } from "./HexPane/HexPane";
+import type { ReassembledStream } from "@/TCPReassembly/types";
+import { StreamModal } from "./StreamModal/StreamModal";
 
 interface Props {
   file: File;
@@ -30,11 +32,13 @@ function findProtocolIndexAtOffset(protocols: PacketDetails[], offset: number) {
 
 export function WorkSpace({ file, onBack }: Props) {
   const [packets, setPackets] = useState<PacketRecord[]>([]);
+  const [streams, setStreams] = useState<ReassembledStream[]>([]);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [protocolDetail, setProtocolDetail] = useState<PacketDetails[]>([])
   const [selectedField, setSelectedField] = useState<SelectedField>(null)
   const [autoExpandProtocolIndex, setautoExpandProtocolIndex] = useState<number | null>(null);
+  const [activeStream, setActiveStream] = useState<ReassembledStream | null>(null)
 
   const [topBodyHeight, setTopBodyHeight] = useState(0);
 
@@ -52,8 +56,9 @@ export function WorkSpace({ file, onBack }: Props) {
     parsePCAP(file)
     .then(result => {
       setPackets(result.packets)
-      console.log(result.packets[6].data)
-      console.log(result.packets[7].data)
+      setStreams(result.streams)
+      // console.log(result.packets[6].data)
+      // console.log(result.packets[7].data)
     })
     .catch(console.error)
   }, [file])
@@ -85,6 +90,7 @@ export function WorkSpace({ file, onBack }: Props) {
   }, [])
 
   const handleSelect = useCallback((index: number) => {
+    if(index >= packets.length) return;
     const packet = packets[index];
     if(!packet) return;
 
@@ -104,6 +110,19 @@ export function WorkSpace({ file, onBack }: Props) {
       setautoExpandProtocolIndex(idx)
     }
   }, [protocolDetail])
+
+
+
+  const handleFollowStream = useCallback((streamKey: string) => {
+    const stream = streams.find((s => s.streamKey === streamKey))
+    if(stream) {
+      setActiveStream(stream);
+    }
+  }, [streams])
+
+  const handleCloseStreamModal = useCallback(() => {
+    setActiveStream(null)
+  }, [])
   return (
     <div className="h-screen flex flex-col bg-bg-primary overflow-hidden">
       <WorkspaceHeader filename={file.name} onBack={onBack}/>
@@ -128,6 +147,9 @@ export function WorkSpace({ file, onBack }: Props) {
             protocols={protocolDetail}
             selectedField={ selectedField}
             autoExpandProtocolIndex={autoExpandProtocolIndex}
+            streams={streams}
+            selectedPacket={selectedIndex !== null ? packets[selectedIndex] : null}
+            onFollowStream={handleFollowStream}
             onFieldSelect={handleFieldSelect}
             />
           </div>
@@ -137,13 +159,15 @@ export function WorkSpace({ file, onBack }: Props) {
 
       <div className="flex-1 min-w-0 overflow-hidden">
         <HexPane
-        raw={selectedIndex !== null ? packets[selectedIndex].raw : null}
+        raw={selectedIndex !== null && selectedIndex < packets.length ? packets[selectedIndex].raw : null}
         protocols={protocolDetail}
         selectedField={selectedField}
         onFieldSelect={handleFieldSelect}
         />
       </div>
       </div>
+
+      <StreamModal stream={activeStream} onClose={handleCloseStreamModal}/>
     </div>
   )
 }
