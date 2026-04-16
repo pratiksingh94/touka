@@ -6,8 +6,6 @@ export function DevNotes() {
       <p className="mb-5">
         Currently, only the Ethernet link layer and its related protocols (IP, TCP, UDP, ICMP, ARP) are supported.
         More protocols will be added over time.
-        <br/>
-        Application Layer will also be added soon after TCP Reassembly is done.
       </p>
 
       {/* <p>

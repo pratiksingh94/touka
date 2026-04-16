@@ -4,9 +4,33 @@ const isValidPCAPFIle = (file: File) => {
   return file.name.toLowerCase().endsWith(".pcap")
 }
 
+
+type SampleFile = {
+  name: string;
+  path: string;
+  description: string;
+}
+
+const SAMPLE_FILES: SampleFile[] = [
+  {
+    name: "test.pcap",
+    path: "/test-samples/test.pcap",
+    description: "Mixed protocols (DNS, HTTP, ARP, ICMP)"
+  },
+  {
+    name: "http-test.pcap",
+    path: "/test-samples/http-test.pcap",
+    description: "HTTP-heavy (GET, POST, 200, 404, 401 responses)"
+  }
+]
+
+
+
+
 export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null)
+  const [loadingSample, setLoadingSample] = useState<string | null>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -52,17 +76,20 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
   }
 
 
-  const handleLoadSample = async (e: React.MouseEvent) => {
+  const handleLoadSample = async (e: React.MouseEvent, sample: SampleFile) => {
     e.stopPropagation();
     setError(null);
+    setLoadingSample(sample.name)
     try {
-      const res = await fetch("/test-samples/test.pcap");
+      const res = await fetch(sample.path);
       const blob = await res.blob();
-      const file = new File([blob], "test.pcap", { type: "application/octet-stream" })
+      const file = new File([blob], sample.name, { type: "application/octet-stream" })
 
       onFileSelect(file);
     } catch (err) {
       console.error("failed to load sample file", error);
+    } finally {
+      setLoadingSample(null);
     }
   }
 
@@ -104,10 +131,22 @@ export function UploadZone({onFileSelect}: {onFileSelect: (f: File) => void}) {
         <div className="flex-1 h-px bg-border"/>
       </div>
 
-      <button
-      onClick={handleLoadSample}
-      className="w-full py-3 px-4 border rounded-lg cursor-pointer border-border text-text-secondary text-sm hover:border-accent hover:text-text-primary transition-colors"
-      >Load Sample File</button>
+      <div className="space-y-2">
+        <p className="text-text-muted text-xs text-center mb-2">Load sample files</p>
+        <div className="grid grid-cols-2 gap-2">
+          {SAMPLE_FILES.map(s => (
+            <button
+            key={s.name}
+            onClick={(e) => handleLoadSample(e, s)}
+            disabled={loadingSample !== null}
+            className="py-3 px-4 border rounded-lg cursor-pointer border-border text-left hover:border-acent hover:bg-bg-secondary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <div className="text-text-primary text-sm font-medium">{s.name}</div>
+              <div className="text-text-muted text-[10px] mt-0.5 line-clamp-2">{s.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

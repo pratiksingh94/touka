@@ -56,3 +56,6 @@ the stuff changing duh dawg
 ### 15-04-2026
 - started UI work for TCP based applicaiton layer protocols
 - did HTTP
+
+### 16-04-2026
+- added HTTP-heavy pcap file as sample files
